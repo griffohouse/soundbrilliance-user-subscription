@@ -29,15 +29,16 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     return (
     <html suppressHydrationWarning lang="en">
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
       >
-      <Provider>
-        <DevLinkProvider>
-          {/* Add here any Navbar or Header you want to be present on all pages */}
-          {children}
-          {/* Add here any Footer you want to be present on all pages */}
-        </DevLinkProvider>
-      </Provider>
+      <DevLinkProvider>
+        <Provider>
+            {/* Add here any Navbar or Header you want to be present on all pages */}
+            {children}
+            {/* Add here any Footer you want to be present on all pages */}
+        </Provider>
+      </DevLinkProvider>
       </body>
     </html>
   );

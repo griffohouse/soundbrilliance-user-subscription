@@ -1,6 +1,9 @@
 "use client";
+
 import { Section } from "@/devlink/_Builtin";
-import Form from 'next/form'
+import { createEnterpriseUser } from "../../actions/createuser";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
     Button,
     Checkbox,
@@ -8,59 +11,92 @@ import {
     Fieldset,
     Input,
     Stack,
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
 
+export default function Page() {
+    const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
-export default async function Page()  {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        setError(null);
+
+        const formData = new FormData(e.currentTarget);
+
+        const result = await createEnterpriseUser(formData);
+
+        if (result?.error) {
+            console.log('result error', result.error)
+            setError(result.error);
+            return;
+        }
+        router.push("/checkout");
+    }
+
+    useEffect(() => {
+        console.log("Updated error state:", error);
+    }, [error]);
+
     return (
-    <Section
-      tag="section"
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-        <Form action={'/create_password'}>
-            <Fieldset.Root size="lg" maxW="md">
-                <Stack>
-                    <Fieldset.Legend color='black'>Create an Account</Fieldset.Legend>
-                    <Fieldset.HelperText >
-                        Please provide your user details below.
-                    </Fieldset.HelperText>
-                </Stack>
+        <Section
+            tag="section"
+            style={{
+                minHeight: "100vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+            }}
+        >
+            <form onSubmit={handleSubmit}>
+                <Fieldset.Root size="lg" maxW="md">
+                    <Stack>
+                        <Fieldset.Legend color="black">
+                            Create an Account
+                        </Fieldset.Legend>
+                    </Stack>
 
-                <Fieldset.Content>
-                    <Field.Root>
-                        <Field.Label>Name</Field.Label>
-                        <Input name="name" />
-                    </Field.Root>
+                    <Fieldset.Content>
+                        <Field.Root>
+                            <Field.Label>Access Code</Field.Label>
+                            <Input required name="accessCode" type="number" />
+                        </Field.Root>
 
-                    <Field.Root>
-                        <Field.Label>Email address</Field.Label>
-                        <Input name="email" type="email" />
-                    </Field.Root>
+                        <Field.Root>
+                            <Field.Label>Name</Field.Label>
+                            <Input required name="name" />
+                        </Field.Root>
 
-                    <Field.Root>
-                        <Field.Label>Access Code</Field.Label>
-                        <Input name="access code" type="number" />
-                    </Field.Root>
+                        <Field.Root>
+                            <Field.Label>Email address</Field.Label>
+                            <Input required name="email" type="email" />
+                        </Field.Root>
 
-                    <Checkbox.Root>
-                        <Checkbox.HiddenInput />
-                        <Checkbox.Control />
-                        <Checkbox.Label>I accept terms and conditions</Checkbox.Label>
-                    </Checkbox.Root>
+                        <Field.Root>
+                            <Field.Label>Password</Field.Label>
+                            <Input required name="password" type="password" />
+                        </Field.Root>
 
-                </Fieldset.Content>
+                        <Field.Root>
+                            <Field.Label>Confirm Password</Field.Label>
+                            <Input required name="confirmPassword" type="password" />
+                        </Field.Root>
 
-                <Button type="submit" alignSelf="flex-start">
-                    Submit
-                </Button>
-            </Fieldset.Root>
-        </Form>
-    </Section>
-    )
+                        <Checkbox.Root required name="termsAgreement">
+                            <Checkbox.HiddenInput />
+                            <Checkbox.Control />
+                            <Checkbox.Label>
+                                I accept terms and conditions
+                            </Checkbox.Label>
+                        </Checkbox.Root>
+                    </Fieldset.Content>
+                    {error ?? <Fieldset.ErrorText>{error}</Fieldset.ErrorText>}
+
+
+                    <Button type="submit" alignSelf="flex-start">
+                        Submit
+                    </Button>
+                </Fieldset.Root>
+            </form>
+        </Section>
+    );
 }
-
