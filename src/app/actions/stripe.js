@@ -6,44 +6,8 @@ import { stripe } from '../lib/stripe'
 
 export async function fetchClientSecret() {
     const origin = (await headers()).get('origin')
-
     const cookies = await (await import('next/headers')).cookies()
     const stripeCustomerId = cookies.get("stripe_customer_id")?.value
-    //
-    // try {
-    //     const response = await fetch(
-    //         "https://xpzx-vpjp-v6yl.n7.xano.io/api:YM0i2R_3/get_enterprise_user",
-    //         {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({
-    //                 access_code: accessCode,
-    //                 name,
-    //                 email,
-    //                 password,
-    //                 terms_agreement: new Date().toISOString(),
-    //             }),
-    //         }
-    //     );
-    //
-    //     if (!response.ok) {
-    //         const err = await response.json();
-    //         return { error: err.message || "Failed to submit data to Xano." };
-    //     }
-    //
-    //     const user = await response.json();
-    //
-    //     (await cookies()).set("stripe_customer_id", user.stripe_customer_id);
-    //
-    //
-    //     return { success: true };
-    // } catch (e: any) {
-    //     return { error: e.message };
-    // }
-
-
     if (!stripeCustomerId) {
         throw new Error("Missing Stripe Customer ID")
     }
