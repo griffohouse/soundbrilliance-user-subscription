@@ -34,7 +34,7 @@ export default async function Welcome({ searchParams }) {
         return (
             <Container height={'100%'} width={'100%'} fluid={true} paddingTop={'3rem'} paddingBottom={'3rem'} centerContent={true}>
                 <VStack textAlign={'center'} gap={'2.5rem'} width={'100%'}>
-                    <div width={'10rem'} height={'10rem'}>
+                    <div style={{width: '10rem', height: '10rem'}}>
                         <SoundbrillianceLogo></SoundbrillianceLogo>
                     </div>
                     <Text maxWidth={'24rem'} textStyle={'lg'}>
@@ -45,7 +45,7 @@ export default async function Welcome({ searchParams }) {
                     <Text maxWidth={'24rem'} textStyle={'lg'}>
                         Use the links below to <Span fontWeight={'bold'}>access and login to the app</Span>
                     </Text>
-                    <div width={'20rem'} height={'20rem'}>
+                    <div style={{width: '20rem', height: '20rem'}}>
                         <SbApp />
                     </div>
                     <HStack gap={'1.7rem'}>

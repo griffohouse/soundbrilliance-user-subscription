@@ -6,7 +6,7 @@ export default function Page() {
     return (
         <Container height={'100%'} width={'100%'} fluid={true} paddingTop={'3rem'} paddingBottom={'3rem'} centerContent={true}>
             <VStack textAlign={'center'} gap={'2.5rem'} width={'100%'}>
-                <div width={'10rem'} height={'10rem'}>
+                <div style={{width: '10rem', height: '10rem'}}>
                     <SoundbrillianceLogo></SoundbrillianceLogo>
                 </div>
                 <Text color="black">
