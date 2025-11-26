@@ -23,6 +23,7 @@ const PasswordFields = dynamic(
 );
 
 export default function Page() {
+    console.log('signup route');
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
