@@ -2,7 +2,7 @@
 
 import { SubmitButton } from '@/devlink/SubmitButton';
 import { SoundbrillianceLogo } from "@/devlink/SoundbrillianceLogo";
-import { createEnterpriseUser } from "../../actions/createuser";
+import { createEnterpriseUser } from "./actions/createuser";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
